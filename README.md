@@ -95,3 +95,60 @@ $ npm install redis --save
 ```
 $ docker build ./ -t kensh/thumbnail_worker:0.1
 ```
+
+
+
+### QUEUE
+
+* rabbitmq
+
+```
+$ docker pull rabbitmq:3-management
+$ docker run -d --hostname rabbit --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+$ curl http://localhost:15672
+```
+
+
+### DATA STORE
+
+* redis
+
+```
+$ docker pull redis
+$ docker run --name redis -p 6379:6379 -d redis
+```
+
+* connect from redis-cli
+
+```
+$ docker run -it --link redis:redis --rm redis redis-cli -h redis -p 6379
+```
+
+
+### COMPOSE
+
+```
+UP
+$ docker swarm init
+$ docker stack deploy --compose-file docker-compose.yml thumbnail
+
+DOWN
+$ docker swarm leave -f
+$ docker network prune -f
+
+MANAGE
+
+$ docker stack ps thumbnail
+$ docker logs [container]
+```
+
+
+### TEST
+
+
+* jasmine-node
+
+```
+$ npm install jasmine-node --save-dev
+$ npm install request --save-dev
+```
