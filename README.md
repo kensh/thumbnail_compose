@@ -58,3 +58,40 @@ $ npm install redis --save
 $ docker build ./ -t kensh/thumbnail_web:0.1
 ```
 
+
+### Worker
+
+* imagemagick https://github.com/rsms/node-imagemagick
+
+```
+iinstall on host
+$ brew install imagemagick
+
+ex)
+$ convert sample.jpg -resize 100x100 sample.png
+```
+
+```
+install on node
+$ npm install imagemagick --save
+```
+
+* subscriber
+
+```
+$ ln -s ../thumbnail_web/upload/ ./upload
+$ npm init
+$ npm install amqplib --save
+```
+
+* datastore
+
+```
+$ npm install redis --save
+```
+
+* docker
+
+```
+$ docker build ./ -t kensh/thumbnail_worker:0.1
+```
