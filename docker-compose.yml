@@ -3,11 +3,14 @@ services:
 
   redis:
     image: redis:latest
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - "6379:6379"
     networks:
       - frontend
       - backend
+    command: redis-server /usr/local/etc/redis/redis.conf
     deploy:
       mode: replicated
       replicas: 1
@@ -31,7 +34,7 @@ services:
   web:
     image: kensh/thumbnail_web:0.1
     volumes: 
-      - upload:/opt/thumbnail
+      - upload:/opt/thumbnail/upload
     ports:
       - "80:3000"
     networks:
@@ -48,7 +51,7 @@ services:
   worker:
     image: kensh/thumbnail_worker:0.1
     volumes: 
-      - upload:/opt/thumbnail
+      - upload:/opt/thumbnail/upload
     networks:
       - backend
     depends_on:
